@@ -10,7 +10,7 @@ const PostPage: FC<{ post: Post }> = ({ post }) => {
       <p>{ post.author }</p>
       <p>{ post.date_posted ? post.date_posted.toString() : "No Date" }</p>
       { post.topics.map((topic, index) => (
-        <span key={ index }>{ index > 0 ? ` | ${topic}` : topic }</span>
+        <span key={ index }>{ index > 0 ? ` | ${topic.tag}` : topic.tag }</span>
       )) }
       <img src={ post.imageUrl } />
       <PortableText value={ post.article } />
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       date_posted,
       last_updated,
       article,
-      "topics": topics[]->tag
+      topics[]->{tag}
     }
   `);
 

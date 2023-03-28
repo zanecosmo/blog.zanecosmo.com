@@ -9,7 +9,7 @@ export interface Post {
   author: string,
   date_posted: Date | undefined,
   last_updated: Date | undefined,
-  topics: string[],
+  topics: Topic[],
   imageUrl: string,
   article: TypedObject | TypedObject[]
 };

@@ -32,11 +32,11 @@ export const fetchPosts = async (searchQuery: string): Promise<Post[]> => {
         | score(title match "${searchQuery}", article match "${searchQuery}")
         | order(_score desc)
         [ _score > 0 ]
-        { title, slug, "imageUrl": article_image.asset->url, date_posted, last_updated }
+        { title, slug, topics[]->{tag}, "imageUrl": article_image.asset->url, date_posted, last_updated }
         `
     : `*[_type == "post"]
         | order(date_posted desc)
-        { title, slug, "imageUrl": article_image.asset->url, date_posted, last_updated }`
+        { title, slug, topics[]->{tag}, "imageUrl": article_image.asset->url, date_posted, last_updated }`
   );
 
   let URL = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${query}`;

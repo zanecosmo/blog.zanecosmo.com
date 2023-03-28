@@ -31,46 +31,47 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     router.push("/");
   };
 
+  const buttonStyle = "hover:underline hover:underline-offset-2 hover:decoration-1";
+
   return (
-    <div>
+    <div className="font-Montserrat">
 
-      <nav>
-        <button type="button" onClick={ () => setState("", "") } className="text-3xl text-green-600 p-2">Home</button>
+      <header className="fixed w-screen bg-black text-white">
+        <nav className="h-12 text-sm space-x-6 flex items-center">
+          <span className="ml-4 font-bold text-lg">blog.zanecosmo</span>
 
-        <button type="button" onClick={ () => setAreTopicsVisible(!areTopicsVisible) }>Categories</button>
+          <button type="button" onClick={ () => setState("", "") } className={ buttonStyle }>Home</button>
 
-        <SearchBar { ...{ searchBarState, setSearchBarState, searchPosts } } />
-      </nav>
+          <button type="button" onClick={ () => setAreTopicsVisible(!areTopicsVisible) } className={ buttonStyle }>Categories</button>
 
-      {
-        areTopicsVisible && (
-          <div>
-            {
-              topics.length === 0
-                ? <div>LOADING...</div>
-                : (
-                    <div>
-                      { topics.map((topic, index) => (
-                        <button
-                          key={ index }
-                          type="button"
-                          onClick={ () => setState("", topic.tag) }
-                        >
-                          { topic.tag }
-                        </button>
-                      )) }
-                    </div>
-                  )
-            }
-          </div>
-        )
-      }
+          <SearchBar { ...{ searchBarState, setSearchBarState, searchPosts } } />
+        </nav>
+        <nav className={ `border-t border-t-white border-solid ${areTopicsVisible ? "" : "hidden"}` }>
+          {
+            topics.length === 0
+              ? <div>LOADING...</div>
+              : (
+                  <div>
+                    { topics.map((topic, index) => (
+                      <button className="m-2 mr-0 px-2 py-1 border"
+                        key={ index }
+                        type="button"
+                        onClick={ () => setState("", topic.tag) }
+                      >
+                        { topic.tag }
+                      </button>
+                    )) }
+                  </div>
+                )
+          }
+        </nav>
+      </header>
 
-      <div>
+      <div className="pt-12">
         <Component { ...pageProps } posts={ posts } isHome={ router.asPath === "/"} />
       </div>
 
-      <footer>FOOTER</footer>
+      {/* <footer>FOOTER</footer> */}
 
     </div>
   );
